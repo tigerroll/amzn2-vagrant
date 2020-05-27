@@ -13,7 +13,6 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "amazonlinux2-vagrant"
   config.vm.network :private_network, ip: "192.168.33.10" 
   config.vm.network :forwarded_port, guest: 80, host: 8080
-  config.vm.boot_timeout = 300
   config.ssh.forward_x11 = true
 
   config.vm.provider :virtualbox do |vb|
@@ -21,6 +20,8 @@ Vagrant.configure("2") do |config|
      vb.name = BOX_NAME
      vb.customize ["modifyvm", :id, "--memory", "4096"]
      vb.customize ["modifyvm", :id, "--cpus", "2"]
+     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
   # Shared directory
